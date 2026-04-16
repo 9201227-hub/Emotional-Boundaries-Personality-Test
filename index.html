@@ -15,7 +15,7 @@
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%; 
             background-color: #000; font-family: "Noto Sans TC", sans-serif; 
-            overflow: hidden; /* 防止主頁面亂滾 */
+            overflow: hidden; 
         }
 
         /* 背景與螢火蟲 */
@@ -29,75 +29,58 @@
         #white-out { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.8s; }
 
         /* 首頁 */
-        #start-screen { position: fixed; z-index: 1000; width: 100%; height: 100%; background: #0a1020; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s; }
+        #start-screen { position: fixed; z-index: 2000; width: 100%; height: 100%; background: #0a1020; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s; }
         .start-title { font-size: 1.4rem; letter-spacing: 8px; color: #fff; display: flex; align-items: center; }
         .soft-glow { color: rgba(100, 200, 255, 1); margin-left: 10px; animation: ghost-flicker 6s infinite ease-in-out; }
         .start-subtitle { font-size: 0.85rem; color: #a0b0c0; letter-spacing: 3px; margin-top: 15px; font-weight: 300; }
         .start-btn { background: none; border: 1px solid #666; color: #fff; border-radius: 30px; cursor: pointer; transition: all 0.4s ease; font-size: 1rem; letter-spacing: 2px; margin-top: 45px; }
         .main-action { width: 260px; padding: 16px 0; background: rgba(255, 255, 255, 0.05); border: 1.5px solid #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); animation: pulse-border 2.5s infinite; }
-        .sub-link-style { background: none; border: none; color: #ffffff; opacity: 0.7; font-size: 0.85rem; text-decoration: none; text-align: center; padding: 10px 0; cursor: pointer; transition: 0.3s; width: 200px; }
+        
+        .sub-link-style { 
+            background: none; border: none; color: #ffffff; opacity: 0.7; 
+            font-size: 0.85rem; text-decoration: none; text-align: center; 
+            padding: 10px 0; cursor: pointer; transition: 0.3s; width: 200px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
         @keyframes pulse-border { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
 
-        /* 測驗 UI */
-        #quiz-ui { position: relative; z-index: 10; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; }
-        #main-door { width: 90vw; max-width: 440px; min-height: 60vh; display: flex; flex-direction: column; padding: 40px 25px; border: 1.5px solid transparent; transition: 0.6s; }
-        .door-city { border-color: #007bff !important; box-shadow: 0 0 20px rgba(0,123,255,0.25); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); }
-        .door-forest { border-color: #00ff88 !important; box-shadow: 0 0 20px rgba(0,255,136,0.25); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); }
+        /* 測驗 UI - 確保層級明確 */
+        #quiz-ui { position: absolute; z-index: 100; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; pointer-events: auto; }
+        #main-door { width: 90vw; max-width: 440px; min-height: 60vh; display: flex; flex-direction: column; padding: 40px 25px; border: 1.5px solid transparent; transition: 0.6s; background: rgba(0,0,0,0.3); border-radius: 12px; }
+        .door-city { border-color: #007bff !important; box-shadow: 0 0 20px rgba(0,123,255,0.25); background: rgba(0,0,0,0.6) !important; backdrop-filter: blur(8px); }
+        .door-forest { border-color: #00ff88 !important; box-shadow: 0 0 20px rgba(0,255,136,0.25); background: rgba(0,0,0,0.6) !important; backdrop-filter: blur(8px); }
+        
         .question-text { font-size: 0.95rem; line-height: 1.8; color: #f2f2f2; opacity: 0; transition: opacity 0.5s; margin-bottom: 30px; }
         .question-text.active { opacity: 1; }
         .option-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 14px 18px; color: #fff; margin-bottom: 12px; border-radius: 6px; text-align: left; width: 100%; cursor: pointer; }
-        .option-btn.selected { border-color: #fff; background: rgba(255,255,255,0.2); }
+        .option-btn.selected { border-color: #fff; background: rgba(255,255,255,0.3); }
 
-        /* 結果頁：解決上方被切掉的最終方案 */
+        /* 結果頁 */
         #result-page { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg-deep); z-index: 2000; 
-            display: none; 
-            flex-direction: column; 
-            justify-content: flex-start; /* 改為從頂部開始排，防止上方被切 */
-            align-items: center; 
-            padding: 40px 20px; /* 給予上方足夠的留白空間 */
-            overflow-y: auto; /* 核心：當螢幕短時，下方可滾動 */
-            -webkit-overflow-scrolling: touch; /* 讓手機捲動更順暢 */
-            opacity: 0; transition: opacity 1.2s ease-in-out;
+            background: var(--bg-deep); z-index: 3000; display: none; 
+            flex-direction: column; justify-content: flex-start; align-items: center; 
+            padding: 40px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch;
+            opacity: 0; transition: opacity 1s;
         }
 
-        .result-card { 
-            width: 100%; 
-            max-width: 350px; 
-            background: var(--card-gray); 
-            padding: 10px; 
-            border: 1px solid #bbb; 
-            flex-shrink: 0; /* 確保小卡不會被擠壓變形 */
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            margin-bottom: 20px; /* 與下方按鈕保持距離 */
-        }
-
-        .card-inner { 
-            border: 1px solid #b8b8b8; padding: 20px; 
-            display: flex; flex-direction: column; align-items: center; 
-            background: var(--card-gray);
-        }
-        
+        .result-card { width: 100%; max-width: 350px; background: var(--card-gray); padding: 10px; border: 1px solid #bbb; flex-shrink: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.6); margin-bottom: 20px; }
+        .card-inner { border: 1px solid #b8b8b8; padding: 20px; display: flex; flex-direction: column; align-items: center; background: var(--card-gray); }
         .char-display { position: relative; width: 100%; height: 210px; display: flex; justify-content: center; align-items: center; margin-bottom: 5px; }
-        .char-circle-static { position: absolute; width: 150px; height: 150px; border-radius: 50%; z-index: 0; transition: 0.8s; opacity: 1; }
+        .char-circle-static { position: absolute; width: 150px; height: 150px; border-radius: 50%; z-index: 0; transition: 0.8s; }
         .char-circle-glow { position: absolute; width: 165px; height: 165px; border-radius: 50%; z-index: 1; filter: blur(10px); opacity: 0; }
         .char-img { position: relative; z-index: 2; height: 110%; width: auto; object-fit: contain; }
-
         .radar-box { width: 130px; height: 130px; margin: 5px 0; }
         .radar-label { font-size: 11px; fill: #333; font-weight: 900; }
-        
         .result-title { font-size: 1.25rem; font-weight: 900; letter-spacing: 2px; border-bottom: 2.5px solid #222; padding-bottom: 5px; margin: 10px 0; }
         .result-quote { font-size: 0.8rem; font-style: italic; color: #555; margin-bottom: 12px; text-align: center; }
         .result-desc { text-align: justify; font-size: 0.88rem; line-height: 1.75; color: #222; border-top: 1px solid #ccc; padding-top: 12px; margin-top: 10px; }
-        
         .tag-container { display: flex; gap: 6px; margin-bottom: 12px; }
         .soul-tag { font-size: 0.75rem; color: #fff; padding: 3px 12px; border-radius: 20px; }
-
         .save-hint { margin-top: 5px; font-size: 0.75rem; color: #aaa; letter-spacing: 1px; }
         #share-btn { background:none; border:1.5px solid rgba(255,255,255,0.8); color:#fff; margin-top:15px; padding:12px 45px; border-radius:30px; font-weight:bold; letter-spacing:2px; cursor:pointer; }
-
-        @keyframes ghost-flicker { 0%, 100% { opacity: 0.4; text-shadow: 0 0 0px rgba(100, 200, 255, 0.6); } 50% { opacity: 1; text-shadow: 0 0 15px rgba(100, 200, 255, 1); } }
+        @keyframes ghost-flicker { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; text-shadow: 0 0 15px rgba(100, 200, 255, 1); } }
     </style>
 </head>
 <body>
@@ -110,7 +93,7 @@
     <div class="start-subtitle">當靈魂感到疲憊時，你會在哪裡停下？</div>
     <div class="btn-group" style="display: flex; flex-direction: column; gap: 10px; margin-top: 45px; align-items: center; z-index: 10;">
         <button class="start-btn main-action" onclick="startQuiz()">進入測試</button>
-        <button class="sub-link-style">回到之前</button>
+        <a href="https://9201227-hub.github.io/Belonging-or-a-Cage/" class="sub-link-style">回到之前</a>
     </div>
 </div>
 
@@ -122,8 +105,8 @@
         <div id="question-box" class="question-text"></div>
         <div id="options-box"></div>
         <div style="margin-top:auto; display:flex; justify-content:space-between; align-items:center;">
-            <button id="prev-btn" style="background:none; border:none; color:#999;" onclick="prevStep()">PREV</button>
-            <button id="next-btn" style="background:#fff; color:#000; border:none; padding:10px 30px; border-radius:20px; font-weight:bold;" onclick="nextStep()" disabled>CONFIRM</button>
+            <button id="prev-btn" style="background:none; border:none; color:#999; cursor:pointer;" onclick="prevStep()">PREV</button>
+            <button id="next-btn" style="background:#fff; color:#000; border:none; padding:10px 30px; border-radius:20px; font-weight:bold; cursor:pointer;" onclick="nextStep()" disabled>CONFIRM</button>
         </div>
     </div>
 </div>
@@ -138,7 +121,6 @@
             </div>
             <div id="res-title" class="result-title"></div>
             <div id="res-quote" class="result-quote"></div>
-            
             <div class="radar-box">
                 <svg viewBox="-30 -25 160 150" style="width:100%; height:100%;">
                     <polygon points="50,5 95,85 5,85" fill="none" stroke="#ccc" stroke-width="0.5"/>
@@ -152,7 +134,6 @@
             <div id="res-desc" class="result-desc"></div>
         </div>
     </div>
-
     <div class="save-hint">〈 長按截圖保存靈魂側寫 〉</div>
     <button id="share-btn" onclick="shareResult()">分享我的靈魂刻印</button>
     <button class="sub-link-style" style="margin-top:10px; margin-bottom: 40px;" onclick="location.reload()">RESTART</button>
@@ -165,83 +146,79 @@
         forest: new Audio('forest_bgm.mp3'),
         mainTheme: new Audio('main_theme.mp3') 
     };
-    sounds.city.loop = true;
-    sounds.forest.loop = true;
-    sounds.mainTheme.loop = true;
+    sounds.city.loop = sounds.forest.loop = sounds.mainTheme.loop = true;
 
     function fadeVolume(audio, targetVolume, duration = 1200) {
         const startVolume = audio.volume;
         const diff = targetVolume - startVolume;
         const steps = 30;
-        const stepTime = duration / steps;
         let currentStep = 0;
         const timer = setInterval(() => {
             currentStep++;
             audio.volume = Math.min(Math.max(startVolume + (diff * (currentStep / steps)), 0), 1);
             if (currentStep >= steps) { audio.volume = targetVolume; clearInterval(timer); }
-        }, stepTime);
+        }, duration / steps);
     }
 
     function playSound(key) {
-        if (key === 'transition') {
-            sounds.transition.currentTime = 0;
-            sounds.transition.play();
-        } else {
-            sounds.city.pause();
-            sounds.forest.pause();
-            sounds[key].play();
-        }
+        if (key === 'transition') { sounds.transition.currentTime = 0; sounds.transition.play(); } 
+        else { sounds.city.pause(); sounds.forest.pause(); sounds[key].play(); }
     }
 
     const questions = [
         { q: "這陣子的你像是被抽乾了水份，連回應訊息都覺得沈重。這時，一個溫慢的朋友傳來語音：「我知道你很累，現在什麼都別想，把手機放下，我待會過去找你。」你的直覺反應是——", options: [{t:"A. 感到壓迫，想著「我現在只想一個人」。",v:"A"},{t:"B. 感到被重視，開始期待見面後能聊些什麼。",v:"B"},{t:"C. 鬆了一口氣，覺得終於有人可以幫我決定接下來。",v:"C"}] },
         { q: "在一個陌生的聚會中，有人看著你的眼睛，突然說出了一句非常私密、卻精準擊中你心事的話。那一瞬間，你的感受是——", options: [{t:"A. 驚訝之後是防備，心想：「這人為什麼知道？」",v:"A"},{t:"B. 感到奇妙且浪漫，想多聽聽他對你還有什麼看法。",v:"B"},{t:"C. 像是找到了一件弄丟已久的珍寶，覺得他能真正理解你。",v:"C"}] },
         { q: "走出聚會場所，你回到那個熟悉的嘈雜空間，忽然看到一扇從未注意過的門。旁邊的人告訴你，門後是一片能讓人「忘掉所有煩惱、重新洗滌靈魂」的森林。你會——", options: [{t:"A. 在門口觀察很久，思考這個世界上真的有這種地方嗎？",v:"A"},{t:"B. 想像著門後的世界能夠改變自己變成一個更輕盈的人。",v:"B"},{t:"C. 直接開門進入，因為你現在真的很想逃離現實的沈重。",v:"C"}] },
-        { q: "你推開了那扇門。森林裡的人們顯得異常友善，他們細心地照料著彼此，空氣中充滿了關懷。他們微笑著邀請你加入，並承諾這裡沒有任何評判與傷害。你會——", options: [{t:"A. 覺得這種過度的和諧很不真實，甚至有點違和。",v:"A"},{t:"B. 覺得加入他們或許不錯，渴望自己也能擁有這份安詳。",v:"B"},{t:"C. 覺得這裡比外面更加美好，想要立刻融入這份節奏。",v:"C"}] },
+        { q: "你推開了那扇門。森林裡的人們顯得異常友善，空氣中充滿了關懷。他們微笑著邀請你加入，並承諾這裡沒有任何評判與傷害。你會——", options: [{t:"A. 覺得這種過度的和諧很不真實，甚至有點違和。",v:"A"},{t:"B. 覺得加入他們或許不錯，渴望自己也能擁有這份安詳。",v:"B"},{t:"C. 覺得這裡比外面更加美好，想要立刻融入這份節奏。",v:"C"}] },
         { q: "在這裡有一種獨特的習俗，需要你丟掉原本的名字與習慣，去學習一套全新的生活方式。你的反應是——", options: [{t:"A. 感到抗拒，並且感到十分不適。",v:"A"},{t:"B. 說不定這是一個「升級自我」機會，願意嘗試看看。",v:"B"},{t:"C. 感到解脫，覺得那個舊的、痛苦的自己，丟掉也沒關係。",v:"C"}] },
-        { q: "當你逐漸融入在這群人當中，變得溫柔且不再感到孤單，並且認為自己再也不用接觸之前的世界，甚至遠離了那個滿身缺點的你時，那扇熟悉的門再次出現，你會——", options: [{t:"A. 重新握住門把，即便知道開門後，必須再次面對原來的自己。",v:"A"},{t:"B. 留在原地，因為你深信現在的自己，才是那個值得被愛的版本。",v:"B"},{t:"C. 無視那扇門，只要能不再回到過去，捨棄身份也無所謂。",v:"C"}] }
+        { q: "當你逐漸融入在這群人當中，變得溫柔且不再感到孤單時，那扇熟悉的門再次出現，你會——", options: [{t:"A. 重新握住門把，即便知道開門後，必須再次面對原來的自己。",v:"A"},{t:"B. 留在原地，因為你深信現在的自己，才是那個值得被愛的版本。",v:"B"},{t:"C. 無視那扇門，只要能不再回到過去，捨棄身份也無所謂。",v:"C"}] }
     ];
 
     const resultData = {
-        "01": { title: "不可折射的稜鏡", quote: "「即便世界萬紫千紅，我也只願折射出屬於自己的光。」", tags: ["#獨行者","#清醒","#稜鏡"], color: "#2c4a6b", desc: "你傾向在群體中保持高度的清醒與邊界感。即便在疲憊時刻，內心的「理性監控」仍會運作。你對溫暖有需求，但也對「被同化」有著本能的警覺。當察覺環境試圖重塑你的核心時，你會立刻審視並退回安全區域。你始終保有獨立主權，不輕易被環境染色。" },
-        "02": { title: "逐漸染色的畫布", quote: "「當我成為了眾人，我才終於不再感到孤單。」", tags: ["#共生","#柔和","#彩色"], color: "#8a3d3d", desc: "你擁有極強的共情能力，容易在感性包圍下放下戒心。你習慣追求他人眼中的「更好」。柔軟隨和是你的特質，但在過程中，你原本的輪廓會逐漸模糊。融入集體後，你的聲音與大眾重疊，最終難以分辨真實的自我。你在群體中獲得安全，卻也失去了獨特的色彩。" },
-        "03": { title: "尋找光源的飛蛾", quote: "「如果現實太冷，我寧願在溫暖的謊言中燃燒。」", tags: ["#餘暉","#避風港","#尋光"], color: "#2d4a3d", desc: "你對安定的心理需求強烈。當現實讓你焦慮時，你會傾向尋找安全感，並願意交出主導權以換取平靜。相比回到黑暗與痛苦，你更願意留在目前的避風港，即使這意味著要放棄部分的自我。維持現狀的平穩對你而言比任何探求真相的事都重要。" },
-        "04": { title: "披著偽裝的獨行者", quote: "「我學會了所有語言，只為守護內心的荒野。」", tags: ["#擬態","#面具","#影子"], colors: ["#2c4a6b", "#8a3d3d"], desc: "你擅長「社交擬態」，擁有柔暖的共情能力和極高的配合能力，能如魚得水地融入集體。然而核心深處是一片不對外開放的禁區。你利用「融入」來保護「獨立」，透過扮演完美的角色換取自由。你像舞會中的影子，看似與眾人起舞，實則內心始終獨自一人行走在荒野中。" },
-        "05": { title: "深淵邊緣的鐘擺", quote: "「我看清了所有陷阱，卻在寒冷中失去力氣。」", tags: ["#靜止","#鐘擺","#深淵"], colors: ["#2c4a6b", "#2d4a3d"], desc: "你處於清醒卻無力的靜止狀態。你能洞察環境中的偽善，甚至對那些廉價的安慰感到厭倦，但現實的疲憊卻像引力般拽住了你。你不會被輕易洗腦，但卻因為缺乏動力而選擇留在原地。最深刻的痛苦是你清楚看著自己正在沉淪，卻提不起勁去掙扎。" },
-        "06": { title: "渴望消融的空殼", quote: "「只要不再透明，我願意成為任何人。」", tags: ["#消融","#潮汐","#渴望"], colors: ["#8a3d3d", "#2d4a3d"], desc: "你對「自我」的定義感到深刻的厭煩。孤獨對你而言是一種透明的「不存在感」。當強大且溫柔的體系出現時，你會產生毀滅式的依附感。你主動尋找可以替換自我的容器，願意完全交出主導權。你不是被動被環境染色，你是主動渴望被巨大的溫柔吞噬。" }
+        "01": { title: "不可折射的稜鏡", quote: "「即便世界萬紫千紅，我也只願折射出屬於自己的光。」", tags: ["#獨行者","#清醒","#稜鏡"], color: "#2c4a6b", desc: "你傾向在群體中保持高度的清醒與邊界感。即便在疲憊時刻，內心的「理性監控」仍會運作。你對溫暖有需求，但也對「被同化」有著本能的警覺。當察覺環境試圖重塑你的核心時，你會立刻審視並退回安全區域。" },
+        "02": { title: "逐漸染色的畫布", quote: "「當我成為了眾人，我才終於不再感到孤單。」", tags: ["#共生","#柔和","#彩色"], color: "#8a3d3d", desc: "你擁有極強的共情能力，容易在感性包圍下放下戒心。你習慣追求他人眼中的「更好」。柔軟隨和是你的特質，但在過程中，你原本的輪廓會逐漸模糊。你在群體中獲得安全，卻也失去了獨特的色彩。" },
+        "03": { title: "尋找光源的飛蛾", quote: "「如果現實太冷，我寧願在溫暖的謊言中燃燒。」", tags: ["#餘暉","#避風港","#尋光"], color: "#2d4a3d", desc: "你對安定的心理需求強烈。當現實讓你焦慮時，你會傾向尋找安全感，並願意交出主導權以換取平靜。相比回到黑暗與痛苦，你更願意留在目前的避風港，即使這意味著要放棄部分的自我。" },
+        "04": { title: "披著偽裝的獨行者", quote: "「我學會了所有語言，只為守護內心的荒野。」", tags: ["#擬態","#面具","#影子"], colors: ["#2c4a6b", "#8a3d3d"], desc: "你擅長「社交擬態」，擁有柔暖的共情能力，能如魚得水地融入集體。然而核心深處是一片不對外開放的禁區。你利用「融入」來保護「獨立」，透過扮演完美的角色換取自由。" },
+        "05": { title: "深淵邊緣的鐘擺", quote: "「我看清了所有陷阱，卻在寒冷中失去力氣。」", tags: ["#靜止","#鐘擺","#深淵"], colors: ["#2c4a6b", "#2d4a3d"], desc: "你處於清醒卻無力的靜止狀態。你能洞察環境中的偽善，甚至對那些廉價的安慰感到厭倦，但現實的疲憊卻像引力般拽住了你。最深刻的痛苦是你清楚看著自己正在沉淪，卻提不起勁去掙扎。" },
+        "06": { title: "渴望消融的空殼", quote: "「只要不再透明，我願意成為任何人。」", tags: ["#消融","#潮汐","#渴望"], colors: ["#8a3d3d", "#2d4a3d"], desc: "你對「自我」的定義感到深刻的厭煩。孤獨對你而言是一種透明的「不存在感」。當強大且溫柔的體系出現時，你會產生毀滅式的依附感。你主動尋找可以替換自我的容器，願意完全交出主導權。" }
     };
 
     let step = 0; let choices = Array(6).fill(null);
 
-    function createFireflies() {
-        const c = document.getElementById('fireflies');
-        for (let i = 0; i < 15; i++) {
-            const f = document.createElement('div'); f.className = 'firefly';
-            f.style.left = Math.random() * 100 + 'vw'; f.style.top = Math.random() * 100 + 'vh';
-            f.style.setProperty('--d', (10 + Math.random() * 10) + 's');
-            f.style.setProperty('--b', (2 + Math.random() * 3) + 's');
-            c.appendChild(f);
-        }
-    }
-    createFireflies();
-
     function startQuiz() {
+        const startScreen = document.getElementById('start-screen');
+        const quizUI = document.getElementById('quiz-ui');
+        
         sounds.mainTheme.volume = 0.8; sounds.mainTheme.play(); 
         sounds.city.volume = 0.5; sounds.city.play(); 
         fadeVolume(sounds.mainTheme, 0.08, 1200); 
-        document.getElementById('start-screen').style.opacity = '0';
-        setTimeout(() => { document.getElementById('start-screen').style.display = 'none'; document.getElementById('quiz-ui').style.display = 'flex'; updateUI(); }, 800);
+
+        startScreen.style.opacity = '0';
+        startScreen.style.pointerEvents = 'none'; // 立即禁止首頁點擊穿透
+        
+        setTimeout(() => {
+            startScreen.style.display = 'none';
+            quizUI.style.display = 'flex';
+            updateUI();
+        }, 800);
     }
 
     function updateUI() {
         const qBox = document.getElementById('question-box');
         const bgFront = document.getElementById('bg-layer-front');
         if (step === 3) { playSound('transition'); setTimeout(() => playSound('forest'), 500); }
+        
         let bgUrl = (step <= 2) ? (step === 2 ? 'city_door_bg.png' : 'city_bg.png') : (step === 5 ? 'forest_door_bg.png' : 'forest_bg.png');
         bgFront.style.opacity = "0";
         setTimeout(() => { bgFront.style.backgroundImage = `url(${bgUrl})`; bgFront.style.opacity = "0.7"; }, 100);
+        
         qBox.classList.remove('active');
-        setTimeout(() => { qBox.innerText = questions[step].q; qBox.classList.add('active'); renderOptions(); document.getElementById('main-door').className = (step === 2) ? "door-city" : (step === 5 ? "door-forest" : ""); }, 400);
+        setTimeout(() => { 
+            qBox.innerText = questions[step].q; 
+            qBox.classList.add('active'); 
+            renderOptions(); 
+            document.getElementById('main-door').className = (step === 2) ? "door-city" : (step === 5 ? "door-forest" : ""); 
+        }, 400);
     }
 
     function renderOptions() {
@@ -250,7 +227,12 @@
             const b = document.createElement('button');
             b.className = `option-btn ${choices[step] === opt.v ? 'selected' : ''}`;
             b.innerText = opt.t;
-            b.onclick = () => { choices[step] = opt.v; renderOptions(); document.getElementById('next-btn').disabled = false; };
+            b.onclick = (e) => { 
+                e.stopPropagation(); // 確保點擊不穿透
+                choices[step] = opt.v; 
+                renderOptions(); 
+                document.getElementById('next-btn').disabled = false; 
+            };
             oBox.appendChild(b);
         });
         document.getElementById('prev-btn').style.visibility = step === 0 ? 'hidden' : 'visible';
@@ -269,80 +251,72 @@
         const resPage = document.getElementById('result-page');
         playSound('transition');
         quizUI.style.opacity = '0'; flash.style.opacity = '1';
-        sounds.city.pause(); sounds.forest.pause();
 
         setTimeout(() => {
             const counts = { A: 0, B: 0, C: 0 }; choices.forEach(v => counts[v]++);
-            let id = "01";
-            if (counts.A > counts.B && counts.A > counts.C) id = "01";
-            else if (counts.B > counts.A && counts.B > counts.C) id = "02";
-            else if (counts.C > counts.A && counts.C > counts.B) id = "03";
-            else if (counts.A === counts.B) id = "04";
-            else if (counts.A === counts.C) id = "05";
-            else id = "06";
+            let id = (counts.A > counts.B && counts.A > counts.C) ? "01" : (counts.B > counts.A && counts.B > counts.C) ? "02" : (counts.C > counts.A && counts.C > counts.B) ? "03" : (counts.A === counts.B) ? "04" : (counts.A === counts.C) ? "05" : "06";
 
             const d = resultData[id];
             document.getElementById('final-img').src = `${id}.png`;
             const staticCircle = document.getElementById('circle-static');
             const glowCircle = document.getElementById('circle-glow');
-            let keyframes = ""; let mainPureColor = "";
             const oldStyle = document.getElementById('dynamic-keyframes');
             if (oldStyle) oldStyle.remove();
 
+            let mainPureColor = d.colors ? d.colors[0] : d.color;
             if(d.colors) {
-                mainPureColor = d.colors[0];
-                staticCircle.style.backgroundImage = `linear-gradient(to bottom left, ${d.colors[0]} 10%, ${d.colors[1]} 90%)`;
+                staticCircle.style.backgroundImage = `linear-gradient(to bottom left, ${d.colors[0]}, ${d.colors[1]})`;
                 staticCircle.style.backgroundColor = 'transparent';
-                keyframes = `@keyframes res-breathe { 0%, 100% { background-color: ${d.colors[0]}; opacity: 0.9; box-shadow: 0 0 30px ${d.colors[0]}; } 50% { background-color: ${d.colors[1]}; opacity: 0.9; box-shadow: 0 0 30px ${d.colors[1]}; } }`;
             } else {
-                mainPureColor = d.color;
                 staticCircle.style.backgroundColor = d.color;
                 staticCircle.style.backgroundImage = 'none';
-                keyframes = `@keyframes res-breathe { 0%, 100% { background-color: ${d.color}; opacity: 0.9; box-shadow: 0 0 30px ${d.color}; } 50% { opacity: 0.2; } }`;
             }
-            const styleSheet = document.createElement("style"); styleSheet.id = 'dynamic-keyframes'; styleSheet.innerText = keyframes; document.head.appendChild(styleSheet);
-            glowCircle.style.animation = "res-breathe 9s infinite ease-in-out";
+            
+            const styleSheet = document.createElement("style"); 
+            styleSheet.id = 'dynamic-keyframes'; 
+            styleSheet.innerText = `@keyframes res-breathe { 0%, 100% { background-color: ${mainPureColor}; opacity: 0.9; box-shadow: 0 0 30px ${mainPureColor}; } 50% { opacity: 0.3; } }`; 
+            document.head.appendChild(styleSheet);
+            glowCircle.style.animation = "res-breathe 8s infinite ease-in-out";
 
             document.getElementById('res-title').innerText = d.title;
             document.getElementById('res-quote').innerText = d.quote;
             document.getElementById('res-desc').innerText = d.desc;
 
-            const centerX = 50; const centerY = 58; const maxLen = 40; 
-            const getScale = (val) => (val === 0 ? 0 : 0.2 + (val / 6) * 0.8);
-            const pA = { x: centerX, y: centerY - (getScale(counts.A) * maxLen) };
-            const pB = { x: centerX + (getScale(counts.B) * maxLen * 1.04), y: centerY + (getScale(counts.B) * maxLen * 0.62) };
-            const pC = { x: centerX - (getScale(counts.C) * maxLen * 1.04), y: centerY + (getScale(counts.C) * maxLen * 0.62) };
             const poly = document.getElementById('radar-poly');
+            const getScale = (val) => (val === 0 ? 0 : 0.2 + (val / 6) * 0.8);
+            const pA = { x: 50, y: 58 - (getScale(counts.A) * 40) };
+            const pB = { x: 50 + (getScale(counts.B) * 41.6), y: 58 + (getScale(counts.B) * 24.8) };
+            const pC = { x: 50 - (getScale(counts.C) * 41.6), y: 58 + (getScale(counts.C) * 24.8) };
             poly.setAttribute("points", `${pA.x},${pA.y} ${pB.x},${pB.y} ${pC.x},${pC.y}`);
             poly.setAttribute("fill", mainPureColor); poly.setAttribute("stroke", mainPureColor);
 
             const tBox = document.getElementById('tag-box'); tBox.innerHTML = '';
-            d.tags.forEach(t => {
-                const span = document.createElement('span'); span.className = 'soul-tag';
-                span.style.background = mainPureColor; span.innerText = t; tBox.appendChild(span);
-            });
+            d.tags.forEach(t => { const s = document.createElement('span'); s.className = 'soul-tag'; s.style.background = mainPureColor; s.innerText = t; tBox.appendChild(s); });
 
-            fadeVolume(sounds.mainTheme, 0.25, 2000);
             quizUI.style.display = 'none';
             resPage.style.display = 'flex';
-            // 重要：切換到結果頁時，自動將捲軸拉回最上方
-            resPage.scrollTop = 0; 
             setTimeout(() => { resPage.style.opacity = '1'; flash.style.opacity = '0'; }, 50);
         }, 800);
     }
 
     async function shareResult() {
-        const imgName = document.getElementById('final-img').src.split('/').pop().split('.')[0];
-        const d = resultData[imgName];
-        const shareData = {
-            title: '情緒的邊界｜幾何敘事測驗',
-            text: `我的靈魂刻印是：【${d.title}】\n「${d.quote}」\n快來測測看你的靈魂顏色。`,
-            url: window.location.href
-        };
+        const id = document.getElementById('final-img').src.split('/').pop().split('.')[0];
+        const d = resultData[id];
         try {
-            if (navigator.share) { await navigator.share(shareData); } 
-            else { navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`); alert('結果已複製到剪貼簿！'); }
-        } catch (err) {}
+            await navigator.share({ title: '情緒的邊界', text: `我的靈魂刻印是：【${d.title}】`, url: window.location.href });
+        } catch (err) {
+            navigator.clipboard.writeText(`我的靈魂刻印是：【${d.title}】\n${window.location.href}`);
+            alert('連結已複製！');
+        }
+    }
+
+    // 螢火蟲生成
+    const fireContainer = document.getElementById('fireflies');
+    for (let i = 0; i < 15; i++) {
+        const f = document.createElement('div'); f.className = 'firefly';
+        f.style.left = Math.random() * 100 + 'vw'; f.style.top = Math.random() * 100 + 'vh';
+        f.style.setProperty('--d', (8+Math.random()*10)+'s'); f.style.setProperty('--b', (2+Math.random()*3)+'s');
+        fireContainer.appendChild(f);
     }
 </script>
 </body>
