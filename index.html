@@ -9,13 +9,14 @@
             --bg-deep: #0d1310;
             --card-gray: #e8e8e8;
             --text-dark: #222222;
-            --color-01: #2c4a6b; 
-            --color-02: #8a3d3d; 
-            --color-03: #2d4a3d; 
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; font-family: "Noto Sans TC", sans-serif; overflow: hidden; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            background-color: #000; font-family: "Noto Sans TC", sans-serif; 
+            overflow: hidden; /* 防止主頁面亂滾 */
+        }
 
         /* 背景與螢火蟲 */
         .bg-layer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background-size: cover; background-position: center; pointer-events: none; opacity: 0; transition: opacity 0.8s; z-index: 1; }
@@ -25,52 +26,21 @@
         @keyframes breathe { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.6; } }
 
         /* 閃光層 */
-        #white-out { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #fff; z-index: 9999; opacity: 0; pointer-events: none;
-            transition: opacity 0.8s ease-in-out; 
-        }
+        #white-out { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.8s; }
 
         /* 首頁 */
         #start-screen { position: fixed; z-index: 1000; width: 100%; height: 100%; background: #0a1020; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s; }
         .start-title { font-size: 1.4rem; letter-spacing: 8px; color: #fff; display: flex; align-items: center; }
         .soft-glow { color: rgba(100, 200, 255, 1); margin-left: 10px; animation: ghost-flicker 6s infinite ease-in-out; }
-        .start-subtitle { font-size: 0.85rem; color: #a0b0c0; letter-spacing: 3px; margin-top: 15px; font-weight: 300; text-shadow: 0 0 8px rgba(0,0,0,0.5); }
-        
-        .start-btn { 
-            background: none; border: 1px solid #666; color: #fff; border-radius: 30px; 
-            cursor: pointer; transition: all 0.4s ease; font-size: 1rem;
-            letter-spacing: 2px; margin-top: 45px;
-        }
-
-        .main-action {
-            width: 260px; padding: 16px 0; background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            animation: pulse-border 2.5s infinite;
-        }
-
-        .main-action:hover { background: #fff; color: #000; box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); transform: translateY(-2px); }
-
-        .sub-link-style {
-            background: none; border: none; color: #ffffff; opacity: 0.7;
-            font-size: 0.85rem; text-decoration: none; text-align: center;
-            padding: 10px 0; cursor: pointer; transition: 0.3s; width: 200px;
-        }
-        .sub-link-style:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; }
-
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-        }
+        .start-subtitle { font-size: 0.85rem; color: #a0b0c0; letter-spacing: 3px; margin-top: 15px; font-weight: 300; }
+        .start-btn { background: none; border: 1px solid #666; color: #fff; border-radius: 30px; cursor: pointer; transition: all 0.4s ease; font-size: 1rem; letter-spacing: 2px; margin-top: 45px; }
+        .main-action { width: 260px; padding: 16px 0; background: rgba(255, 255, 255, 0.05); border: 1.5px solid #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); animation: pulse-border 2.5s infinite; }
+        .sub-link-style { background: none; border: none; color: #ffffff; opacity: 0.7; font-size: 0.85rem; text-decoration: none; text-align: center; padding: 10px 0; cursor: pointer; transition: 0.3s; width: 200px; }
+        @keyframes pulse-border { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
 
         /* 測驗 UI */
-        #quiz-ui { 
-            position: relative; z-index: 10; width: 100%; height: 100%; 
-            display: none; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease-in-out;
-        }
-        #main-door { width: 90vw; max-width: 440px; min-height: 70vh; display: flex; flex-direction: column; padding: 40px 25px; border: 1.5px solid transparent; transition: 0.6s; }
+        #quiz-ui { position: relative; z-index: 10; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; }
+        #main-door { width: 90vw; max-width: 440px; min-height: 60vh; display: flex; flex-direction: column; padding: 40px 25px; border: 1.5px solid transparent; transition: 0.6s; }
         .door-city { border-color: #007bff !important; box-shadow: 0 0 20px rgba(0,123,255,0.25); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); }
         .door-forest { border-color: #00ff88 !important; box-shadow: 0 0 20px rgba(0,255,136,0.25); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); }
         .question-text { font-size: 0.95rem; line-height: 1.8; color: #f2f2f2; opacity: 0; transition: opacity 0.5s; margin-bottom: 30px; }
@@ -78,34 +48,56 @@
         .option-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 14px 18px; color: #fff; margin-bottom: 12px; border-radius: 6px; text-align: left; width: 100%; cursor: pointer; }
         .option-btn.selected { border-color: #fff; background: rgba(255,255,255,0.2); }
 
-        /* 結果頁 */
+        /* 結果頁：解決上方被切掉的最終方案 */
         #result-page { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--bg-deep); z-index: 2000; display: none; 
-            flex-direction: column; justify-content: center; align-items: center; 
-            padding: 15px; overflow-y: auto; opacity: 0;
-            transition: opacity 1.2s ease-in-out;
+            background: var(--bg-deep); z-index: 2000; 
+            display: none; 
+            flex-direction: column; 
+            justify-content: flex-start; /* 改為從頂部開始排，防止上方被切 */
+            align-items: center; 
+            padding: 40px 20px; /* 給予上方足夠的留白空間 */
+            overflow-y: auto; /* 核心：當螢幕短時，下方可滾動 */
+            -webkit-overflow-scrolling: touch; /* 讓手機捲動更順暢 */
+            opacity: 0; transition: opacity 1.2s ease-in-out;
         }
-        .result-card { width: 100%; max-width: 360px; background: var(--card-gray); padding: 12px; border: 1px solid #bbb; }
-        .card-inner { border: 1px solid #b8b8b8; padding: 15px; display: flex; flex-direction: column; align-items: center; position: relative; }
+
+        .result-card { 
+            width: 100%; 
+            max-width: 350px; 
+            background: var(--card-gray); 
+            padding: 10px; 
+            border: 1px solid #bbb; 
+            flex-shrink: 0; /* 確保小卡不會被擠壓變形 */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            margin-bottom: 20px; /* 與下方按鈕保持距離 */
+        }
+
+        .card-inner { 
+            border: 1px solid #b8b8b8; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; 
+            background: var(--card-gray);
+        }
         
         .char-display { position: relative; width: 100%; height: 210px; display: flex; justify-content: center; align-items: center; margin-bottom: 5px; }
-        .char-circle-static { position: absolute; width: 150px; height: 150px; border-radius: 50%; z-index: 0; transition: 0.8s; opacity: 1; background-size: cover; }
-        .char-circle-glow { position: absolute; width: 160px; height: 160px; border-radius: 50%; z-index: 1; filter: blur(8px); opacity: 0; }
-        .char-img { position: relative; z-index: 2; height: 110%; width: auto; object-fit: contain; transform: translateY(2px); }
+        .char-circle-static { position: absolute; width: 150px; height: 150px; border-radius: 50%; z-index: 0; transition: 0.8s; opacity: 1; }
+        .char-circle-glow { position: absolute; width: 165px; height: 165px; border-radius: 50%; z-index: 1; filter: blur(10px); opacity: 0; }
+        .char-img { position: relative; z-index: 2; height: 110%; width: auto; object-fit: contain; }
 
-        .radar-box { width: 140px; height: 140px; margin: 5px 0; }
+        .radar-box { width: 130px; height: 130px; margin: 5px 0; }
         .radar-label { font-size: 11px; fill: #333; font-weight: 900; }
         
-        .result-title { font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; border-bottom: 2px solid #222; padding-bottom: 5px; margin: 10px 0; }
-        .result-quote { font-size: 0.75rem; font-style: italic; color: #555; margin-bottom: 10px; text-align: center; }
-        .result-desc { text-align: justify; font-size: 0.85rem; line-height: 1.7; color: #222; border-top: 1px solid #ccc; padding-top: 10px; margin-top: 10px; }
-        .tag-container { display: flex; gap: 6px; margin-bottom: 10px; }
-        .soul-tag { font-size: 0.75rem; color: #fff; padding: 2px 12px; border-radius: 20px; }
+        .result-title { font-size: 1.25rem; font-weight: 900; letter-spacing: 2px; border-bottom: 2.5px solid #222; padding-bottom: 5px; margin: 10px 0; }
+        .result-quote { font-size: 0.8rem; font-style: italic; color: #555; margin-bottom: 12px; text-align: center; }
+        .result-desc { text-align: justify; font-size: 0.88rem; line-height: 1.75; color: #222; border-top: 1px solid #ccc; padding-top: 12px; margin-top: 10px; }
+        
+        .tag-container { display: flex; gap: 6px; margin-bottom: 12px; }
+        .soul-tag { font-size: 0.75rem; color: #fff; padding: 3px 12px; border-radius: 20px; }
+
+        .save-hint { margin-top: 5px; font-size: 0.75rem; color: #aaa; letter-spacing: 1px; }
+        #share-btn { background:none; border:1.5px solid rgba(255,255,255,0.8); color:#fff; margin-top:15px; padding:12px 45px; border-radius:30px; font-weight:bold; letter-spacing:2px; cursor:pointer; }
 
         @keyframes ghost-flicker { 0%, 100% { opacity: 0.4; text-shadow: 0 0 0px rgba(100, 200, 255, 0.6); } 50% { opacity: 1; text-shadow: 0 0 15px rgba(100, 200, 255, 1); } }
-        .save-hint { margin-top: 15px; font-size: 0.75rem; color: #888; animation: hintBreathe 2s infinite; }
-        @keyframes hintBreathe { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -145,7 +137,7 @@
                 <img id="final-img" src="" class="char-img">
             </div>
             <div id="res-title" class="result-title"></div>
-            <div id="res-quote" style="font-size:0.75rem; font-style:italic; color:#555; margin-bottom:10px;"></div>
+            <div id="res-quote" class="result-quote"></div>
             
             <div class="radar-box">
                 <svg viewBox="-30 -25 160 150" style="width:100%; height:100%;">
@@ -160,15 +152,13 @@
             <div id="res-desc" class="result-desc"></div>
         </div>
     </div>
+
     <div class="save-hint">〈 長按截圖保存靈魂側寫 〉</div>
-
-    <button id="share-btn" style="background:none; border:1.5px solid rgba(255,255,255,0.8); color:#fff; margin-top:20px; padding:12px 50px; border-radius:30px; font-weight:bold; letter-spacing:2px; cursor:pointer;" onclick="shareResult()">分享我的靈魂刻印</button>
-
-    <button class="sub-link-style" style="margin-top:15px;" onclick="location.reload()">RESTART</button>
+    <button id="share-btn" onclick="shareResult()">分享我的靈魂刻印</button>
+    <button class="sub-link-style" style="margin-top:10px; margin-bottom: 40px;" onclick="location.reload()">RESTART</button>
 </div>
 
 <script>
-    // 移除音效路徑中的 audio/
     const sounds = {
         city: new Audio('city_bgm.mp3'),
         transition: new Audio('transition.mp3'),
@@ -207,9 +197,9 @@
         { q: "這陣子的你像是被抽乾了水份，連回應訊息都覺得沈重。這時，一個溫慢的朋友傳來語音：「我知道你很累，現在什麼都別想，把手機放下，我待會過去找你。」你的直覺反應是——", options: [{t:"A. 感到壓迫，想著「我現在只想一個人」。",v:"A"},{t:"B. 感到被重視，開始期待見面後能聊些什麼。",v:"B"},{t:"C. 鬆了一口氣，覺得終於有人可以幫我決定接下來。",v:"C"}] },
         { q: "在一個陌生的聚會中，有人看著你的眼睛，突然說出了一句非常私密、卻精準擊中你心事的話。那一瞬間，你的感受是——", options: [{t:"A. 驚訝之後是防備，心想：「這人為什麼知道？」",v:"A"},{t:"B. 感到奇妙且浪漫，想多聽聽他對你還有什麼看法。",v:"B"},{t:"C. 像是找到了一件弄丟已久的珍寶，覺得他能真正理解你。",v:"C"}] },
         { q: "走出聚會場所，你回到那個熟悉的嘈雜空間，忽然看到一扇從未注意過的門。旁邊的人告訴你，門後是一片能讓人「忘掉所有煩惱、重新洗滌靈魂」的森林。你會——", options: [{t:"A. 在門口觀察很久，思考這個世界上真的有這種地方嗎？",v:"A"},{t:"B. 想像著門後的世界能夠改變自己變成一個更輕盈的人。",v:"B"},{t:"C. 直接開門進入，因為你現在真的很想逃離現實的沈重。",v:"C"}] },
-        { q: "你推開了那扇門。森林裡的人們顯得異常友善，空氣中充滿了關懷。他們微笑著邀請你加入，並承諾這裡沒有任何評判與傷害。你會——", options: [{t:"A. 覺得這種過度的和諧很不真實，甚至有點違和。",v:"A"},{t:"B. 覺得加入他們或許不錯，渴望自己也能擁有這份安詳。",v:"B"},{t:"C. 覺得這裡比外面更加美好，想要立刻融入這份節奏。",v:"C"}] },
+        { q: "你推開了那扇門。森林裡的人們顯得異常友善，他們細心地照料著彼此，空氣中充滿了關懷。他們微笑著邀請你加入，並承諾這裡沒有任何評判與傷害。你會——", options: [{t:"A. 覺得這種過度的和諧很不真實，甚至有點違和。",v:"A"},{t:"B. 覺得加入他們或許不錯，渴望自己也能擁有這份安詳。",v:"B"},{t:"C. 覺得這裡比外面更加美好，想要立刻融入這份節奏。",v:"C"}] },
         { q: "在這裡有一種獨特的習俗，需要你丟掉原本的名字與習慣，去學習一套全新的生活方式。你的反應是——", options: [{t:"A. 感到抗拒，並且感到十分不適。",v:"A"},{t:"B. 說不定這是一個「升級自我」機會，願意嘗試看看。",v:"B"},{t:"C. 感到解脫，覺得那個舊的、痛苦的自己，丟掉也沒關係。",v:"C"}] },
-        { q: "當你逐漸融入在這群人當中，變得溫柔且不再感到孤單時，那扇熟悉的門再次出現，你會——", options: [{t:"A. 重新握住門把，即便知道開門後，必須再次面對原來的自己。",v:"A"},{t:"B. 留在原地，因為你深信現在的自己，才是那個值得被愛的版本。",v:"B"},{t:"C. 無視那扇門，只要能不再回到過去，捨棄身份也無所謂。",v:"C"}] }
+        { q: "當你逐漸融入在這群人當中，變得溫柔且不再感到孤單，並且認為自己再也不用接觸之前的世界，甚至遠離了那個滿身缺點的你時，那扇熟悉的門再次出現，你會——", options: [{t:"A. 重新握住門把，即便知道開門後，必須再次面對原來的自己。",v:"A"},{t:"B. 留在原地，因為你深信現在的自己，才是那個值得被愛的版本。",v:"B"},{t:"C. 無視那扇門，只要能不再回到過去，捨棄身份也無所謂。",v:"C"}] }
     ];
 
     const resultData = {
@@ -236,12 +226,9 @@
     createFireflies();
 
     function startQuiz() {
-        sounds.mainTheme.volume = 0.8; 
-        sounds.mainTheme.play(); 
-        sounds.city.volume = 0.5;
-        sounds.city.play(); 
+        sounds.mainTheme.volume = 0.8; sounds.mainTheme.play(); 
+        sounds.city.volume = 0.5; sounds.city.play(); 
         fadeVolume(sounds.mainTheme, 0.08, 1200); 
-
         document.getElementById('start-screen').style.opacity = '0';
         setTimeout(() => { document.getElementById('start-screen').style.display = 'none'; document.getElementById('quiz-ui').style.display = 'flex'; updateUI(); }, 800);
     }
@@ -250,10 +237,7 @@
         const qBox = document.getElementById('question-box');
         const bgFront = document.getElementById('bg-layer-front');
         if (step === 3) { playSound('transition'); setTimeout(() => playSound('forest'), 500); }
-        
-        // 移除背景路徑中的 BG/
         let bgUrl = (step <= 2) ? (step === 2 ? 'city_door_bg.png' : 'city_bg.png') : (step === 5 ? 'forest_door_bg.png' : 'forest_bg.png');
-        
         bgFront.style.opacity = "0";
         setTimeout(() => { bgFront.style.backgroundImage = `url(${bgUrl})`; bgFront.style.opacity = "0.7"; }, 100);
         qBox.classList.remove('active');
@@ -283,13 +267,9 @@
         const quizUI = document.getElementById('quiz-ui');
         const flash = document.getElementById('white-out');
         const resPage = document.getElementById('result-page');
-
         playSound('transition');
-        quizUI.style.opacity = '0';
-        flash.style.opacity = '1';
-
-        sounds.city.pause();
-        sounds.forest.pause();
+        quizUI.style.opacity = '0'; flash.style.opacity = '1';
+        sounds.city.pause(); sounds.forest.pause();
 
         setTimeout(() => {
             const counts = { A: 0, B: 0, C: 0 }; choices.forEach(v => counts[v]++);
@@ -302,9 +282,7 @@
             else id = "06";
 
             const d = resultData[id];
-            // 移除結果圖片路徑中的 img_collect/
             document.getElementById('final-img').src = `${id}.png`;
-            
             const staticCircle = document.getElementById('circle-static');
             const glowCircle = document.getElementById('circle-glow');
             let keyframes = ""; let mainPureColor = "";
@@ -345,14 +323,11 @@
             });
 
             fadeVolume(sounds.mainTheme, 0.25, 2000);
-
             quizUI.style.display = 'none';
             resPage.style.display = 'flex';
-            setTimeout(() => {
-                resPage.style.opacity = '1';
-                flash.style.opacity = '0';
-            }, 50);
-
+            // 重要：切換到結果頁時，自動將捲軸拉回最上方
+            resPage.scrollTop = 0; 
+            setTimeout(() => { resPage.style.opacity = '1'; flash.style.opacity = '0'; }, 50);
         }, 800);
     }
 
@@ -365,12 +340,8 @@
             url: window.location.href
         };
         try {
-            if (navigator.share) {
-                await navigator.share(shareData);
-            } else {
-                navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
-                alert('結果已複製到剪貼簿！');
-            }
+            if (navigator.share) { await navigator.share(shareData); } 
+            else { navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`); alert('結果已複製到剪貼簿！'); }
         } catch (err) {}
     }
 </script>
