@@ -70,7 +70,7 @@
 
         .intro-icon {
             position: relative;
-            width: 100px; /* 放大圖示 */
+            width: 100px; 
             height: auto;
             z-index: 2;
         }
@@ -80,16 +80,16 @@
             color: #fff; letter-spacing: 3px; font-size: 0.95rem;
             text-align: center; line-height: 2; padding: 0 20px;
             opacity: 0;
-            animation: pure-fade-in 2.5s forwards 0.8s ease-out; /* 稍晚於圖示出現 */
+            animation: pure-fade-in 2.5s forwards 0.8s ease-out;
         }
 
-        /* 點擊提示：最後才出現 */
+        /* 點擊提示 */
         .click-hint {
             display: block;
             font-size: 0.7rem; 
             opacity: 0;
             margin-top: 15px;
-            animation: pure-fade-in 2s forwards 2.5s ease-out; /* 全部出現後的0.5s開始 */
+            animation: pure-fade-in 2s forwards 2.5s ease-out;
         }
 
         /* 動畫定義 */
@@ -113,10 +113,14 @@
         /* 閃光層 */
         #white-out { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.8s; }
 
-        /* 首頁 */
-        #start-screen { position: fixed; z-index: 2000; width: 100%; height: 100%; background: #0a1020; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s; }
+        /* 首頁大標題連結樣式 */
         .start-title { font-size: 1.4rem; letter-spacing: 8px; color: #fff; display: flex; align-items: center; }
+        .title-link { text-decoration: none; color: inherit; cursor: pointer; transition: transform 0.3s ease; }
+        .title-link:active { transform: scale(0.9); }
         .soft-glow { color: rgba(100, 200, 255, 1); margin-left: 10px; animation: ghost-flicker 6s infinite ease-in-out; }
+
+        /* 首頁其他 UI */
+        #start-screen { position: fixed; z-index: 2000; width: 100%; height: 100%; background: #0a1020; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s; }
         .start-subtitle { font-size: 0.85rem; color: #a0b0c0; letter-spacing: 3px; margin-top: 15px; font-weight: 300; }
         .start-btn { background: none; border: 1px solid #666; color: #fff; border-radius: 30px; cursor: pointer; transition: all 0.4s ease; font-size: 1rem; letter-spacing: 2px; margin-top: 45px; }
         .main-action { width: 260px; padding: 16px 0; background: rgba(255, 255, 255, 0.05); border: 1.5px solid #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); animation: pulse-border 2.5s infinite; }
@@ -187,7 +191,7 @@
 
 <div id="start-screen">
     <div id="fireflies"></div>
-    <div class="start-title">我，和 <span class="soft-glow">「我」</span></div>
+    <div class="start-title">我，和 <a href="https://9201227-hub.github.io/Merchandise-Area-Memory-Archive-Station/" class="soft-glow title-link">「我」</a></div>
     <div class="start-subtitle">當靈魂感到疲憊時，你會在哪裡停下？</div>
     <div class="btn-group" style="display: flex; flex-direction: column; gap: 10px; margin-top: 45px; align-items: center; z-index: 10;">
         <button class="start-btn main-action" onclick="startQuiz()">進入測試</button>
@@ -277,7 +281,7 @@
 
     const questions = [
         { q: "這陣子的你像是被抽乾了水份，連回應訊息都覺得沈重。這時，一個溫慢的朋友傳來語音：「我知道你很累，現在什麼都別想，把手機放下，我待會過去找你。」你的直覺反應是——", options: [{t:"A. 感到壓迫，想著「我現在只想一個人」。",v:"A"},{t:"B. 感到被重視，開始期待見面後能聊些什麼。",v:"B"},{t:"C. 鬆了一口氣，覺得終於有人可以幫我決定接下來。",v:"C"}] },
-        { q: "在一個陌生的聚會中，有人看著你的眼睛，突然說出了一句非常私密、卻精準擊中你心事的話。那一瞬間，你的感受是——", options: [{t:"A. 驚訝之後是防備，心想：「這人為什麼知道？」",v:"A"},{t:"B. 感到奇妙且浪漫，想多聽聽他對你還有什麼看法。",v:"B"},{t:"C. 像是找到了一件弄丟已久的珍寶，覺得他能真正理解你。",v:"C"}] },
+        { q: "在一個陌生的聚會中，有人看著你的眼睛，突然說出了一句非常私密、卻精準擊中你心事的話。那一瞬間，你的感受是——", options: [{t:"A. 驚訝之後是防備，心想：「這人為什麼知道？」",v:"A"},{t:"B. 感到奇妙且浪漫，想多聽聽他對你還有什麼看法。",v:"B"},{t:"C. 像是找到了一件弄丟依久的珍寶，覺得他能真正理解你。",v:"C"}] },
         { q: "走出聚會場所，你回到那個熟悉的嘈雜空間，忽然看到一扇從未注意過的門。旁邊的人告訴你，門後是一片能讓人「忘掉所有煩惱、重新洗滌靈魂」的森林。你會——", options: [{t:"A. 在門口觀察很久，思考這個世界上真的有這種地方嗎？",v:"A"},{t:"B. 想像著門後的世界能夠改變自己變成一個更輕盈的人。",v:"B"},{t:"C. 直接開門進入，因為你現在真的很想逃離現實的沈重。",v:"C"}] },
         { q: "你推開了那扇門。森林裡的人們顯得異常友善，空氣中充滿了關懷。他們微笑著邀請你加入，並承諾這裡沒有任何評判與傷害。你會——", options: [{t:"A. 覺得這種過度的和諧很不真實，甚至有點違和。",v:"A"},{t:"B. 覺得加入他們或許不錯，渴望自己也能擁有這份安詳。",v:"B"},{t:"C. 覺得這裡比外面更加美好，想要立刻融入這份節奏。",v:"C"}] },
         { q: "在這裡有一種獨特的習俗，需要你丟掉原本的名字與習慣，去學習一套全新的生活方式。你的反應是——", options: [{t:"A. 感到抗拒，並且感到十分不適。",v:"A"},{t:"B. 說不定這是一個「升級自我」機會，願意嘗試看看。",v:"B"},{t:"C. 感到解脫，覺得那個舊的、痛苦的自己，丟掉也沒關係。",v:"C"}] },
